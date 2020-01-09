@@ -1,17 +1,17 @@
 def solution(skill, skill_trees):
     return sum(
-        [is_valid_skill_tree(skill, del_other_skill(skill, skill_tree))
+        [skillTreeWithValidSkill(skill, subtractSkill(skill, skill_tree))
          for skill_tree in skill_trees]
     )
 
 
-def del_other_skill(skill, skill_tree):
+def subtractSkill(skill, skill_tree):
     set_skill = set(skill)
     return ''.join([ch for ch in skill_tree if ch in set_skill])
 
 
-def is_valid_skill_tree(skill, changed_skill_tree):
-    return skill.startswith(changed_skill_tree)
+def skillTreeWithValidSkill(skill, skill_tree):
+    return skill.startswith(skill_tree)
 
 
 def test_solution():
@@ -20,21 +20,21 @@ def test_solution():
 
 
 def test_del_other_skill():
-    assert del_other_skill("CBD", "BACDE") == "BCD"
-    assert del_other_skill("CBD", "CBADF") == "CBD"
-    assert del_other_skill("CBD", "AECB") == "CB"
-    assert del_other_skill("CBD", "BDA") == "BD"
-    assert del_other_skill("CBD", "AF") == ""
+    assert subtractSkill("CBD", "BACDE") == "BCD"
+    assert subtractSkill("CBD", "CBADF") == "CBD"
+    assert subtractSkill("CBD", "AECB") == "CB"
+    assert subtractSkill("CBD", "BDA") == "BD"
+    assert subtractSkill("CBD", "AF") == ""
 
 
 def test_is_valid_skill_tree():
-    assert is_valid_skill_tree("CBD", "BCD") is False
-    assert is_valid_skill_tree("CBD", "CB") is True
-    assert is_valid_skill_tree("CBD", "B") is False
-    assert is_valid_skill_tree("CBD", "CBD") is True
-    assert is_valid_skill_tree("CBD", "BD") is False
-    assert is_valid_skill_tree("CBD", "") is True
-    assert is_valid_skill_tree("ABC", "A") is True
-    assert is_valid_skill_tree("ABC", "AB") is True
-    assert is_valid_skill_tree("ABC", "ABC") is True
-    assert is_valid_skill_tree("ABC", "B") is False
+    assert skillTreeWithValidSkill("CBD", "BCD") is False
+    assert skillTreeWithValidSkill("CBD", "CB") is True
+    assert skillTreeWithValidSkill("CBD", "B") is False
+    assert skillTreeWithValidSkill("CBD", "CBD") is True
+    assert skillTreeWithValidSkill("CBD", "BD") is False
+    assert skillTreeWithValidSkill("CBD", "") is True
+    assert skillTreeWithValidSkill("ABC", "A") is True
+    assert skillTreeWithValidSkill("ABC", "AB") is True
+    assert skillTreeWithValidSkill("ABC", "ABC") is True
+    assert skillTreeWithValidSkill("ABC", "B") is False
