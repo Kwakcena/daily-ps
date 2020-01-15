@@ -2,13 +2,17 @@ from itertools import combinations
 
 
 def solution(nums):
-    if len(nums) == 4:
-        return 1
-    return 4
+    return len(prime_case(nums))
 
 
 def is_prime(numbers):
     return sum(numbers) in [2, 3, 5, 7, 11, 13, 17]
+
+
+def prime_case(numbers):
+    sorted_numbers = sorted(numbers)
+    combinations_list = combinations(sorted_numbers, 3)
+    return [list(xs) for xs in combinations_list if is_prime(xs)]
 
 
 def test_solution():
@@ -21,12 +25,6 @@ def test_is_prime():
     assert is_prime([1, 2, 4])
     assert not is_prime([1, 3, 4])
     assert not is_prime([2, 3, 4])
-
-
-def prime_case(numbers):
-    sorted_numbers = sorted(numbers)
-    combinations_list = combinations(sorted_numbers, 3)
-    return [list(xs) for xs in combinations_list if is_prime(xs)]
 
 
 def test_prime_case():
