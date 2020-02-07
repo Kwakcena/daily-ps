@@ -15,10 +15,14 @@
 - progresses : 작업의 진도가 적힌 정수 배열
 - speeds : 각 작업의 개발 속도가 적힌 정수 배열
 - Math.ceil((100 - progresses[index])/speeds[index]) 의 계산은 남은 진도를 나타냄.
-- 남은 진도가 적인 정수 배열 (remainProgresses)을 이제 어떻게 삶아먹는담.
-- reduce나 map을 이용해서 삶아먹고싶다. 어떻게 할까.
-- 일단 remainProgresses 까지 구해보자.
+- 남은 진도가 적힌 정수 배열 (remainProgresses)을 구한다.
+- remainProgresses 를 getNumberOfReleaseDates 에 보내서 배포 가능한 날짜의 수를 구한다.
 
 ## 3. 실행
 
+- 잘 된다.
+
 ## 4. 반성
+
+- 20200206 에서 풀었을 당시에 if문과 push를 제거했다.
+- getNumberOfReleaseDates에서 max를 let으로 뺐는데 이 부분이 마음에 안든다. 더 나은 방법은 없을까?
