@@ -1,26 +1,19 @@
 const solution = (progresses, speeds) => {
-  const deadline = getDeadline(progresses, speeds);
-  return deuplication(updateDeadline(deadline));
+  return getNumberOfReleaseDates(getRemainProgresses(progresses, speeds));
 };
 
-const getDeadline = (progresses, speeds) => {
-  return progresses.map((x, i) => Math.ceil((100 - x) / speeds[i]));
+const getRemainProgresses = (progresses, speeds) => {
+  return progresses.map((progress, index) =>
+    Math.ceil((100 - progress) / speeds[index])
+  );
 };
 
-const updateDeadline = deadline => {
-  return deadline.reduce((array, current, index) => {
-    if (index !== 0)
-      array.push(array[index - 1] < current ? current : array[index - 1]);
-    else array.push(current);
-
-    return array;
-  }, []);
-};
-
-const deuplication = updateDeadline => {
+const getNumberOfReleaseDates = remainProgresses => {
+  let max = remainProgresses[0];
   return Object.values(
-    updateDeadline.reduce((obj, current, index) => {
-      obj[current] = ++obj[current] || 1;
+    remainProgresses.reduce((obj, current) => {
+      max < current ? (max = current) : max;
+      obj[max] = ++obj[max] || 1;
       return obj;
     }, {})
   );
@@ -30,20 +23,12 @@ test("solution", () => {
   expect(solution([93, 30, 55], [1, 30, 5])).toEqual([2, 1]);
 });
 
-test("get deadline", () => {
-  expect(getDeadline([93, 30, 55], [1, 30, 5])).toEqual([7, 3, 9]);
+test("get remain progresses", () => {
+  expect(getRemainProgresses([93, 30, 55], [1, 30, 5])).toEqual([7, 3, 9]);
 });
 
-test("updateDeadline", () => {
-  expect(updateDeadline([7, 3, 9])).toEqual([7, 7, 9]);
-  expect(updateDeadline([7, 3, 1])).toEqual([7, 7, 7]);
-  expect(updateDeadline([1, 3, 4])).toEqual([1, 3, 4]);
-  expect(updateDeadline([1, 3, 2])).toEqual([1, 3, 3]);
-  expect(updateDeadline([1, 9, 8, 7, 6, 10])).toEqual([1, 9, 9, 9, 9, 10]);
-});
-
-test("중복 제거", () => {
-  expect(deuplication([7, 7, 9])).toEqual([2, 1]);
-  expect(deuplication([7, 7, 7])).toEqual([3]);
-  expect(deuplication([1, 3, 4])).toEqual([1, 1, 1]);
+test("get number of release dates", () => {
+  expect(getNumberOfReleaseDates([7, 3, 9])).toEqual([2, 1]);
+  expect(getNumberOfReleaseDates([7, 7, 7])).toEqual([3]);
+  expect(getNumberOfReleaseDates([1, 3, 4])).toEqual([1, 1, 1]);
 });
