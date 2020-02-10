@@ -12,8 +12,8 @@ const getNumberOfReleaseDates = remainProgresses => {
   let max = remainProgresses[0];
   return Object.values(
     remainProgresses.reduce((obj, current) => {
-      max < current ? (max = current) : max;
-      obj[max] = ++obj[max] || 1;
+      max = max < current ? current : max;
+      obj[max] = (obj[max] || 0) + 1;
       return obj;
     }, {})
   );
