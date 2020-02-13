@@ -1,24 +1,17 @@
 const solution = (bridge_length, weight, truck_weights) => {
   const bridgeTrucks = Array(bridge_length).fill(0);
-  const passedTrucks = [];
   let bridgeTruckWeights = 0;
   let second = 0;
   while (bridgeTruckWeights || truck_weights.length) {
     let truck = bridgeTrucks.shift();
-    if (truck > 0) {
-      bridgeTruckWeights -= truck;
-      passedTrucks.push(truck);
-    }
+    bridgeTruckWeights -= truck;
 
+    let shiftTruck = 0;
     if (bridgeTruckWeights + truck_weights[0] <= weight) {
-      bridgeTruckWeights += truck_weights[0];
-      bridgeTrucks.push(truck_weights.shift());
-    } else {
-      bridgeTrucks.push(0);
+      shiftTruck = truck_weights.shift();
+      bridgeTruckWeights += shiftTruck;
     }
-    // console.log(
-    //   `bridge trucks = ${bridgeTrucks}, passed trucks = ${passedTrucks}, bridge truck weigth = ${bridgeTruckWeights}`
-    // );
+    bridgeTrucks.push(shiftTruck);
     second += 1;
   }
 
