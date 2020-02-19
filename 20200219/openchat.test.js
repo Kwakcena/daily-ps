@@ -6,8 +6,7 @@ const solution = record => {
 
 const getSplitRecords = records => {
   return records.reduce((chatRecord, record) => {
-    chatRecord.push(record.split(" "));
-    return chatRecord;
+    return [...chatRecord, record.split(" ")];
   }, []);
 };
 
@@ -24,14 +23,29 @@ const getChatRecord = (splitRecords, userInfo) => {
     if (command === "Change") {
       return chatRecord;
     }
-    chatRecord.push(
+    return [
+      ...chatRecord,
       command === "Enter"
         ? `${userInfo[userId]}님이 들어왔습니다.`
         : `${userInfo[userId]}님이 나갔습니다.`
-    );
-    return chatRecord;
+    ];
   }, []);
 };
+
+test("userInformation", () => {
+  expect(
+    getUserInfo([
+      ["Enter", "uid1234", "Muzi"],
+      ["Enter", "uid4567", "Prodo"],
+      ["Leave", "uid1234"],
+      ["Enter", "uid1234", "Prodo"],
+      ["Change", "uid4567", "Ryan"]
+    ])
+  ).toStrictEqual({
+    uid1234: "Prodo",
+    uid4567: "Ryan"
+  });
+});
 
 test("getChatRecord", () => {
   expect(
@@ -72,21 +86,6 @@ test("get split chatting record", () => {
     ["Enter", "uid1234", "Prodo"],
     ["Change", "uid4567", "Ryan"]
   ]);
-});
-
-test("userInformation", () => {
-  expect(
-    getUserInfo([
-      ["Enter", "uid1234", "Muzi"],
-      ["Enter", "uid4567", "Prodo"],
-      ["Leave", "uid1234"],
-      ["Enter", "uid1234", "Prodo"],
-      ["Change", "uid4567", "Ryan"]
-    ])
-  ).toStrictEqual({
-    uid1234: "Prodo",
-    uid4567: "Ryan"
-  });
 });
 
 test("solution", () => {
