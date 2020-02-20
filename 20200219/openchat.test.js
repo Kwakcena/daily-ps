@@ -1,36 +1,35 @@
+const commands = {
+  Enter: "님이 들어왔습니다.",
+  Leave: "님이 나갔습니다."
+};
+
 const solution = record => {
-  const splitRecords = getSplitRecords(record);
-  const userInformation = getUserInfo(splitRecords);
-  return getChatRecord(splitRecords, userInformation);
+  const records = splitRecords(record);
+  const userInformation = getUserInfo(records);
+  return getChatRecord(records, userInformation);
 };
 
-const getSplitRecords = records => {
-  return records.reduce((chatRecord, record) => {
-    return [...chatRecord, record.split(" ")];
-  }, []);
-};
+const splitWith = seperator => str => str.split(seperator);
 
-const getUserInfo = splitRecords => {
-  return splitRecords.reduce((userInfo, record) => {
-    userInfo[record[1]] = record[2] || userInfo[record[1]];
-    return userInfo;
-  }, {});
-};
+const splitRecords = records => records.map(splitWith(" "));
 
-const getChatRecord = (splitRecords, userInfo) => {
-  return splitRecords.reduce((chatRecord, splitRecord) => {
-    const [command, userId] = splitRecord;
-    if (command === "Change") {
-      return chatRecord;
-    }
-    return [
-      ...chatRecord,
-      command === "Enter"
-        ? `${userInfo[userId]}님이 들어왔습니다.`
-        : `${userInfo[userId]}님이 나갔습니다.`
-    ];
-  }, []);
-};
+const getUserInfo = records =>
+  records.reduce(
+    (userInfo, [_, userId, nickname]) => ({
+      ...userInfo,
+      [userId]: nickname || userInfo[userId]
+    }),
+    {}
+  );
+
+const getChatRecord = (records, userInfo) =>
+  records.reduce(
+    (chatRecord, [command, userId]) =>
+      command === "Change"
+        ? chatRecord
+        : [...chatRecord, `${userInfo[userId]}${commands[command]}`],
+    []
+  );
 
 test("userInformation", () => {
   expect(
@@ -72,7 +71,7 @@ test("getChatRecord", () => {
 
 test("get split chatting record", () => {
   expect(
-    getSplitRecords([
+    splitRecords([
       "Enter uid1234 Muzi",
       "Enter uid4567 Prodo",
       "Leave uid1234",
