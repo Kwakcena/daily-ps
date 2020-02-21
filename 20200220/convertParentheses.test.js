@@ -14,12 +14,9 @@ function convertParentheses(brackets) {
   if (isUpright(upright)) {
     return upright + convertParentheses(balanced);
   }
-  return `
-    (
-    ${convertParentheses(balanced)}
-    )
-    ${reverseBracket(upright.slice(1, -1))}
-    `;
+  return `(${convertParentheses(balanced)})${reverseBracket(
+    upright.slice(1, -1)
+  )}`;
 }
 
 const split = brackets => {
