@@ -3,7 +3,7 @@ const solution = s => `${extraction(s, /[a-z]/g)}${extraction(s, /[A-Z]/g)}`;
 const extraction = (str, pattern) =>
   str
     .match(pattern)
-    .reverse()
+    .sort((a, b) => (a > b ? -1 : 1))
     .join("");
 
 test("extraction", () => {
@@ -16,4 +16,23 @@ test("extraction", () => {
 test("solution", () => {
   expect(solution("Zbcdefg")).toBe("gfedcbZ");
   expect(solution("abcdeABCDE")).toBe("edcbaEDCBA");
+});
+
+test("reverse", () => {
+  expect(["a", "c", "b"].reverse()).toEqual(["b", "c", "a"]);
+});
+
+test("sort", () => {
+  expect(["a", "c", "b"].sort()).toEqual(["a", "b", "c"]);
+  expect(["a", "c", "b"].sort((a, b) => (a > b ? -1 : 1))).toEqual([
+    "c",
+    "b",
+    "a"
+  ]);
+
+  expect(["a", "k", "h"].sort((a, b) => (a > b ? -1 : 1))).toEqual([
+    "k",
+    "h",
+    "a"
+  ]);
 });
