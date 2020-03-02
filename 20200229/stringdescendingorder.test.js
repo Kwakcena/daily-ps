@@ -1,12 +1,11 @@
 const solution = s => `${extraction(s, /[a-z]/g)}${extraction(s, /[A-Z]/g)}`;
 
-const extraction = (str, pattern) =>
-  str.length == 1
-    ? str
-    : str
-        .match(pattern)
-        .sort((a, b) => (a > b ? -1 : 1))
-        .join("");
+const extraction = (str, pattern) => {
+  const extractionStr = str.match(pattern);
+  return extractionStr
+    ? extractionStr.sort((a, b) => (a > b ? -1 : 1)).join("")
+    : "";
+};
 
 test("extraction", () => {
   expect(extraction("abcABC", /[A-Z]/g)).toBe("CBA");
@@ -14,7 +13,7 @@ test("extraction", () => {
   expect(extraction("abcdez", /[a-z]/g)).toBe("zedcba");
   expect(extraction("azbycx", /[a-z]/g)).toBe("zyxcba");
   expect(extraction("a", /[a-z]/g)).toBe("a");
-  expect(extraction("a", /[A-Z]/g)).toBe("a");
+  expect(extraction("a", /[A-Z]/g)).toBe("");
 });
 
 test("solution", () => {
