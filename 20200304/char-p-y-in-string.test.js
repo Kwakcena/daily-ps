@@ -15,7 +15,7 @@ const solution1 = s => {
 };
 
 const solution2 = s =>
-  (s.match(/p|P/g) || []).length === (s.match(/y|Y/g) || []).length;
+  (s.match(/p/gi) || []).length === (s.match(/y/gi) || []).length;
 
 const solution3 = s => {
   const arr = (s.toLowerCase().match(/p|y/g) || []).reduce((obj, ch) => {
