@@ -17,6 +17,14 @@ const solution1 = s => {
 const solution2 = s =>
   (s.match(/p|P/g) || []).length === (s.match(/y|Y/g) || []).length;
 
+const solution3 = s => {
+  const arr = (s.toLowerCase().match(/p|y/g) || []).reduce((obj, ch) => {
+    obj[ch] = (obj[ch] || 0) + 1;
+    return obj;
+  }, {});
+  return arr["y"] === arr["p"];
+};
+
 test("solution1", () => {
   expect(solution1("pPoooyY")).toBe(true);
   expect(solution1("Pyy")).toBe(false);
@@ -29,4 +37,11 @@ test("solution2", () => {
   expect(solution2("Pyy")).toBe(false);
   expect(solution2("abc")).toBe(true);
   expect(solution2("a")).toBe(true);
+});
+
+test("solution3", () => {
+  expect(solution3("pPoooyY")).toBe(true);
+  expect(solution3("Pyy")).toBe(false);
+  expect(solution3("abc")).toBe(true);
+  expect(solution3("a")).toBe(true);
 });
