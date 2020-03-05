@@ -1,4 +1,5 @@
-const solution = s => (s.length == 4 || s.length == 6) && !isNaN(Number(s));
+const solution = s =>
+  (s.length == 4 || s.length == 6) && s.split("").every(v => Number(v));
 
 test("solution", () => {
   expect(solution("a234")).toBe(false);
@@ -9,4 +10,5 @@ test("solution", () => {
   expect(solution("12345678")).toBe(false);
   expect(solution("abcdef")).toBe(false);
   expect(solution("1e12")).toBe(false);
+  expect(solution("abcd12")).toBe(false);
 });
