@@ -1,5 +1,6 @@
 const solution = s =>
-  (s.length == 4 || s.length == 6) && s.split("").every(v => Number(v));
+  (s.length == 4 || s.length == 6) &&
+  s.split("").every(v => (v >= "0") & (v <= "9"));
 
 test("solution", () => {
   expect(solution("a234")).toBe(false);
@@ -11,4 +12,5 @@ test("solution", () => {
   expect(solution("abcdef")).toBe(false);
   expect(solution("1e12")).toBe(false);
   expect(solution("abcd12")).toBe(false);
+  expect(solution("0000")).toBe(true);
 });
