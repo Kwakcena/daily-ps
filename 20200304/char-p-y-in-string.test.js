@@ -18,6 +18,17 @@ const solution2 = s =>
   (s.match(/p/gi) || []).length === (s.match(/y/gi) || []).length;
 
 const solution3 = s => {
+  const arr = (s.match(/p|y/gi) || []).reduce(
+    (obj, ch) => ({
+      ...obj,
+      [ch]: (obj[ch] || 0) + 1
+    }),
+    {}
+  );
+  return arr["y"] === arr["p"];
+};
+
+const solution4 = s => {
   const arr = (s.toLowerCase().match(/p|y/g) || []).reduce((obj, ch) => {
     obj[ch] = (obj[ch] || 0) + 1;
     return obj;
@@ -44,4 +55,11 @@ test("solution3", () => {
   expect(solution3("Pyy")).toBe(false);
   expect(solution3("abc")).toBe(true);
   expect(solution3("a")).toBe(true);
+});
+
+test("solution4", () => {
+  expect(solution4("pPoooyY")).toBe(true);
+  expect(solution4("Pyy")).toBe(false);
+  expect(solution4("abc")).toBe(true);
+  expect(solution4("a")).toBe(true);
 });
