@@ -28,11 +28,9 @@ const solution2 = n => {
 };
 
 function solution3(n, prev, prevprev) {
-  if (n < 2) return n * prev;
-  let current = prev + prevprev;
-  prevprev = prev;
-  prev = current;
-  return solution3(n - 1, prev, prevprev);
+  return n < 2
+    ? n * prevprev
+    : solution3(n - 1, (prev + prevprev) % 1000000007, prev);
 }
 
 test("solution", () => {
@@ -57,7 +55,8 @@ test("재귀 호출 없는 피보나치 수열 구하기", () => {
 });
 
 test("꼬리 재귀를 이용한 풀이", () => {
-  expect(solution3(1, 1, 0)).toBe(1);
-  expect(solution3(2, 1, 0)).toBe(1);
-  expect(solution3(6, 1, 0)).toBe(8);
+  expect(solution3(1, 2, 1)).toBe(1);
+  expect(solution3(2, 2, 1)).toBe(2);
+  expect(solution3(3, 2, 1)).toBe(3);
+  expect(solution3(4, 2, 1)).toBe(5);
 });
