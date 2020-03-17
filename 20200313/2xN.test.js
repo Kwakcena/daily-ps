@@ -14,8 +14,22 @@ function getTileCount(width, tiles) {
   }
 }
 
+const solution2 = n => {
+  if (n <= 2) return n;
+  let current,
+    prev = 2,
+    prevprev = 1;
+  for (let i = 2; i < n; i++) {
+    current = (prev + prevprev) % 1000000007;
+    prevprev = prev;
+    prev = current;
+  }
+  return current;
+};
+
 test("solution", () => {
   expect(solution(4)).toBe(5);
+  // expect(solution(60000)).toBe(5);
 });
 
 test("타일 개수 구하기", () => {
@@ -23,4 +37,13 @@ test("타일 개수 구하기", () => {
   expect(getTileCount(2, new Array(60001).fill(0))).toBe(2);
   expect(getTileCount(3, new Array(60001).fill(0))).toBe(3);
   expect(getTileCount(4, new Array(60001).fill(0))).toBe(5);
+});
+
+test("재귀 호출 없는 피보나치 수열 구하기", () => {
+  expect(solution2(1)).toBe(1);
+  expect(solution2(2)).toBe(2);
+  expect(solution2(3)).toBe(3);
+  expect(solution2(4)).toBe(5);
+  expect(solution2(100)).toBe(782204094);
+  expect(solution2(60000)).toBe(804299274);
 });
