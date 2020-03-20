@@ -1,12 +1,9 @@
-const solution = n => {
-  let sum = 0;
-  for (let i = 1; i <= n; i++) {
-    if (n % i == 0) {
-      sum += i;
-    }
-  }
-  return sum;
-};
+const solution = n =>
+  n
+    ? [...Array(n).fill(1)].reduce((acc, val, idx) =>
+        n % (idx + 1) == 0 ? (acc += idx + 1) : acc
+      )
+    : 0;
 
 test("약수의 합 구하기", () => {
   expect(solution(12)).toBe(28);
