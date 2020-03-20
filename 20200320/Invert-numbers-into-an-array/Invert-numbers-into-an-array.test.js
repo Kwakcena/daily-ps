@@ -1,6 +1,6 @@
 const solution = n => {
   return String(n)
-    .match(/[1-9]/g)
+    .match(/[0-9]/g)
     .reverse()
     .map(number => 0 | number);
 };
