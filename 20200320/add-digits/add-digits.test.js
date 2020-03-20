@@ -1,11 +1,7 @@
-const solution = n => {
-  let sum = 0;
-  while (n) {
-    sum += n % 10;
-    n = parseInt(n / 10);
-  }
-  return sum;
-};
+const solution = n =>
+  String(n)
+    .match(/[1-9]/g)
+    .reduce((acc, v) => (acc += Number(v)), 0);
 
 test("자릿수 더하기", () => {
   expect(solution(123)).toBe(6);
