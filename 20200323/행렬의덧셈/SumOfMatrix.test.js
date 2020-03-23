@@ -10,6 +10,12 @@ const sumMatrix = (arr1, arr2) => {
   return [...arr1].map((val, idx) => val + arr2[idx]);
 };
 
+const solution2 = (arr1, arr2) => {
+  return [...arr1].map((array, idx) => {
+    return [...array].map((val, i) => val + arr2[idx][i]);
+  });
+};
+
 test("sum matrix", () => {
   expect(sumMatrix([1, 2, 3], [4, 5, 6])).toEqual([5, 7, 9]);
   expect(sumMatrix([3, 7, 4, 1], [9, 2, 3, 4])).toEqual([12, 9, 7, 5]);
@@ -35,6 +41,44 @@ test("solution", () => {
   expect(solution([[1], [2]], [[3], [4]])).toEqual([[4], [6]]);
   expect(
     solution(
+      [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+      ],
+      [
+        [1, 1, 1],
+        [1, 1, 1],
+        [1, 1, 1]
+      ]
+    )
+  ).toEqual([
+    [2, 3, 4],
+    [5, 6, 7],
+    [8, 9, 10]
+  ]);
+});
+
+test("solution2", () => {
+  expect(
+    solution2(
+      [
+        [1, 2],
+        [2, 3]
+      ],
+      [
+        [3, 4],
+        [5, 6]
+      ]
+    )
+  ).toEqual([
+    [4, 6],
+    [7, 9]
+  ]);
+
+  expect(solution2([[1], [2]], [[3], [4]])).toEqual([[4], [6]]);
+  expect(
+    solution2(
       [
         [1, 2, 3],
         [4, 5, 6],
