@@ -1,12 +1,9 @@
-const solution = x => {
-  return true;
-};
+const solution = x => x % sumOfDigits(x) === 0;
 
-const sumOfDigits = num => {
-  return String(num)
+const sumOfDigits = num =>
+  String(num)
     .split("")
     .reduce((acc, val) => acc + Number(val), 0);
-};
 
 test("sum of Digits", () => {
   expect(sumOfDigits(123)).toBe(6);
@@ -16,4 +13,8 @@ test("sum of Digits", () => {
 
 test("solution", () => {
   expect(solution(10)).toBe(true);
+  expect(solution(12)).toBe(true);
+  expect(solution(11)).toBe(false);
+  expect(solution(13)).toBe(false);
+  expect(solution(123)).toBe(false);
 });
