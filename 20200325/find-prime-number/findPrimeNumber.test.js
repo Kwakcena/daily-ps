@@ -2,33 +2,18 @@ const solution = numbers => {
   const EratosArray = Eratosthenes(Array(9999999).fill(1));
   const numberSet = new Set();
 
-  for (let digit = 1; digit <= numbers.length; digit++) {
-    combination(
-      numbers.split(""),
-      "",
-      Array(numbers.length).fill(false),
-      digit,
-      numberSet
-    );
-  }
+  const numbersArray = numbers.split("");
+  const indexCheck = Array(numbers.length).fill(false);
+  const numberString = "";
 
+  for (let digit = 1; digit <= numbers.length; digit++) {
+    combination(numbersArray, numberString, indexCheck, digit, numberSet);
+  }
   return getPrimeCount(numberSet, EratosArray);
 };
 
-const getPrimeCount = (numberSet, Eratos) => {
-  let cnt = 0;
-  numberSet.forEach(number => (cnt += Eratos[number] ? 1 : 0));
-  return cnt;
-};
-
-test("set에 있는 숫자가 소수인지 판단하여 갯수 반환하기", () => {
-  expect(
-    getPrimeCount(
-      new Set([1, 2, 3, 12, 13, 21, 23, 31, 32, 123, 132, 213, 231, 312, 321]),
-      Eratosthenes(Array(150).fill(1))
-    )
-  ).toBe(5);
-});
+const getPrimeCount = (numberSet, Eratos) =>
+  [...numberSet].reduce((cnt, number) => (cnt += Eratos[number]), 0);
 
 function combination(numbersArray, number, checked, digit, numberSet) {
   if (number.length == digit) {
@@ -55,7 +40,6 @@ const Eratosthenes = EratosArray => {
   EratosArray[1] = 0;
   for (let i = 2; i < EratosArray.length; i++) {
     if (!EratosArray[i]) continue;
-    EratosArray[i] = i;
     for (let j = i + i; j < EratosArray.length; j += i) {
       EratosArray[j] = 0;
     }
@@ -71,13 +55,7 @@ test("solution", () => {
 
 test("만들수 있는 숫자의 조합 구하기", () => {
   expect(
-    combination(
-      "123".split("").sort((a, b) => a - b),
-      "",
-      [...Array(3).fill(false)],
-      3,
-      new Set()
-    )
+    combination("123".split(""), "", [...Array(3).fill(false)], 3, new Set())
   ).toEqual();
 });
 
@@ -85,24 +63,33 @@ test("에라토스테네스의 체 만들기", () => {
   expect(Eratosthenes(Array(21).fill(1))).toEqual([
     0,
     0,
-    2,
-    3,
+    1,
+    1,
     0,
-    5,
+    1,
     0,
-    7,
-    0,
-    0,
-    0,
-    11,
-    0,
-    13,
+    1,
     0,
     0,
     0,
-    17,
+    1,
     0,
-    19,
+    1,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
     0
   ]);
+});
+
+test("set에 있는 숫자가 소수인지 판단하여 갯수 반환하기", () => {
+  expect(
+    getPrimeCount(
+      new Set([1, 2, 3, 12, 13, 21, 23, 31, 32, 123, 132, 213, 231, 312, 321]),
+      Eratosthenes(Array(322).fill(1))
+    )
+  ).toBe(5);
 });
