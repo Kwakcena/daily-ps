@@ -12,7 +12,7 @@ const solution = numbers => {
     );
   }
 
-  return 3;
+  return getPrimeCount(numberSet, EratosArray);
 };
 
 const getPrimeCount = (numberSet, Eratos) => {
@@ -64,7 +64,9 @@ const Eratosthenes = EratosArray => {
 };
 
 test("solution", () => {
-  expect(solution("123")).toBe(3);
+  expect(solution("123")).toBe(5);
+  expect(solution("17")).toBe(3);
+  expect(solution("011")).toBe(2);
 });
 
 test("만들수 있는 숫자의 조합 구하기", () => {
