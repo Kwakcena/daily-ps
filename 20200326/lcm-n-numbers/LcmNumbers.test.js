@@ -1,10 +1,4 @@
-const solution = numbers => {
-  for (let i = 0; i < numbers.length - 1; i++) {
-    let gcd = GCD(numbers[i], numbers[i + 1]);
-    numbers[i + 1] = LCM(numbers[i], numbers[i + 1], gcd);
-  }
-  return numbers[numbers.length - 1];
-};
+const solution = numbers => numbers.reduce((a, b) => LCM(a, b, GCD(a, b)));
 
 function GCD(a, b) {
   return a % b ? GCD(b, a % b) : b;
