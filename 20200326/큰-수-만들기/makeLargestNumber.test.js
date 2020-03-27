@@ -4,7 +4,7 @@ const solution = (number, k) => {
   let removeCount = k;
   for (let i = 0; i < len - 1 && removeCount; i++) {
     while (digits[i] < digits[i + 1] && removeCount) {
-      digits.splice(digits.indexOf(digits[i]), 1);
+      digits.splice(i, 1);
       removeCount -= 1;
       i = 0;
     }
