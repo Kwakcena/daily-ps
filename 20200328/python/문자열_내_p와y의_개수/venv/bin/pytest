@@ -1,8 +1,0 @@
-#!/Users/kcena/mywork/daily-ps/20200328/python/문자열_내_p와y의_개수/venv/bin/python
-# -*- coding: utf-8 -*-
-import re
-import sys
-from pytest import main
-if __name__ == '__main__':
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    sys.exit(main())
