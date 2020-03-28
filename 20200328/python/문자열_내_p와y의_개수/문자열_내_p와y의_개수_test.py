@@ -1,10 +1,5 @@
-import re
-
-
 def solution(str):
-    return len(re.compile('y', re.I).findall(str)) == len(
-        re.compile('p', re.I).findall(str))
-
+    return str.lower().count('p') == str.lower().count('y')
 
 def test_solution():
     assert solution("pPoooyY") == True
