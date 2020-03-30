@@ -1,9 +1,14 @@
 const solution = (participant, completion) => {
-  [...completion].forEach(c => {
-    const index = participant.indexOf(c);
-    if (index > -1) participant.splice(index, 1);
-  });
-  return participant[0];
+  const sortedParticipant = participant.sort();
+  const sortedCompletion = completion.sort();
+
+  for (let i = 0; i < participant.length; i++) {
+    if (
+      sortedParticipant[i] !== sortedCompletion[i] ||
+      sortedCompletion == undefined
+    )
+      return sortedParticipant[i];
+  }
 };
 
 test("solution", () => {
