@@ -1,14 +1,7 @@
 const solution = (participant, completion) => {
-  const sortedParticipant = participant.sort();
-  const sortedCompletion = completion.sort();
-
-  for (let i = 0; i < participant.length; i++) {
-    if (
-      sortedParticipant[i] !== sortedCompletion[i] ||
-      sortedCompletion == undefined
-    )
-      return sortedParticipant[i];
-  }
+  const participants = [...participant].sort();
+  const completions = [...completion].sort();
+  return participants.find((it, index) => it !== completions[index]);
 };
 
 test("solution", () => {
