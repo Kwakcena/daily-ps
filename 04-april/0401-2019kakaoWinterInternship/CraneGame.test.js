@@ -1,36 +1,19 @@
 const solution = (board, moves) => {
   const pocket = [];
   const field = updateBoard(...board);
-  let numOfRemoved = 0;
-  for (let i = 0; i < moves.length; i++) {
-    const move = moves[i] - 1;
-    while (1) {
-      const doll = field[move].shift();
-      if (doll == undefined) break;
-      if (doll > 0) {
-        if (top(pocket) == doll) {
-          pocket.pop();
-          numOfRemoved += 2;
-        } else pocket.push(doll);
-        break;
-      }
-    }
-  }
-  return numOfRemoved;
+  return moves.reduce(
+    (_, move) => (_ += pluckDoll(field[move - 1], pocket)),
+    0
+  );
 };
 
 const pluckDoll = (field, pocket) => {
-  const doll = field.shift();
-  if (!doll) return;
-  // if (doll == top(pocket)) {
-  //   pocket.pop();
-  //   return 2;
-  // } else {
-  //   pocket.push(doll);
-  //   return 0;
-  // }
-  // console.log([doll, pocket.pop()].length);
-  return doll == top(pocket) ? pocket.pop() && 2 : pocket.push(doll) && 0;
+  while (1) {
+    const doll = field.shift();
+    if (doll == undefined) return 0;
+    if (doll == 0) continue;
+    return doll == top(pocket) ? pocket.pop() && 2 : pocket.push(doll) && 0;
+  }
 };
 
 const top = stack => (stack.length ? stack[stack.length - 1] : undefined);
