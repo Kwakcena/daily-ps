@@ -19,11 +19,32 @@ const solution = (board, moves) => {
   return numOfRemoved;
 };
 
+const pluckDoll = (field, pocket) => {
+  const doll = field.shift();
+  if (!doll) return;
+  // if (doll == top(pocket)) {
+  //   pocket.pop();
+  //   return 2;
+  // } else {
+  //   pocket.push(doll);
+  //   return 0;
+  // }
+  // console.log([doll, pocket.pop()].length);
+  return doll == top(pocket) ? pocket.pop() && 2 : pocket.push(doll) && 0;
+};
+
 const top = stack => (stack.length ? stack[stack.length - 1] : undefined);
 
 const updateBoard = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
 };
+
+test("인형 뽑기 테스트", () => {
+  expect(pluckDoll([4, 3], [4])).toBe(2);
+  expect(pluckDoll([4, 3], [1])).toBe(0);
+  expect(pluckDoll([4, 3], [1, 2, 4])).toBe(2);
+  expect(pluckDoll([3, 2, 9], [1, 2, 3])).toBe(2);
+});
 
 test("pocket의 가장 위에 있는 값 얻어오기", () => {
   expect(top([1, 2, 3])).toBe(3);
