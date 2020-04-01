@@ -1,27 +1,35 @@
 const solution = (board, moves) => {
-  const stack = [];
-  const changeBoard = zip(...board);
-  let cnt = 0;
+  const pocket = [];
+  const field = updateBoard(...board);
+  let numOfRemoved = 0;
   for (let i = 0; i < moves.length; i++) {
     const move = moves[i] - 1;
     while (1) {
-      const doll = changeBoard[move].shift();
+      const doll = field[move].shift();
       if (doll == undefined) break;
       if (doll > 0) {
-        if (stack.length > 0 && stack[stack.length - 1] == doll) {
-          stack.pop();
-          cnt += 2;
-        } else stack.push(doll);
+        if (top(pocket) == doll) {
+          pocket.pop();
+          numOfRemoved += 2;
+        } else pocket.push(doll);
         break;
       }
     }
   }
-  return cnt;
+  return numOfRemoved;
 };
 
-const zip = (arr, ...arrs) => {
+const top = stack => (stack.length ? stack[stack.length - 1] : undefined);
+
+const updateBoard = (arr, ...arrs) => {
   return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
 };
+
+test("pocket의 가장 위에 있는 값 얻어오기", () => {
+  expect(top([1, 2, 3])).toBe(3);
+  expect(top([1])).toBe(1);
+  expect(top([])).toBe(undefined);
+});
 
 test("solution", () => {
   expect(
@@ -40,7 +48,7 @@ test("solution", () => {
 
 test("col을 기준으로 값 바꾸기", () => {
   expect(
-    zip(
+    updateBoard(
       [0, 0, 0, 0, 0],
       [0, 0, 1, 0, 3],
       [0, 2, 5, 0, 1],
