@@ -1,4 +1,4 @@
-const solution = s => tupple(changeMatrix(getSets(s)));
+const solution = s => tupple(doubleArrToSingleArr(getSets(s)));
 
 const getSets = s => {
   const sets = s.match(/{[\d,]+}/g);
@@ -7,7 +7,8 @@ const getSets = s => {
     .sort((a, b) => a.length - b.length);
 };
 
-const changeMatrix = sets => sets.reduce((_, set) => _.concat(set), []);
+const doubleArrToSingleArr = sets =>
+  sets.reduce((arr, set) => arr.concat(set), []);
 
 const tupple = arr => [
   ...arr.reduce((set, value) => set.add(value), new Set())
@@ -51,7 +52,7 @@ test("집합 단위로 추출하기", () => {
 });
 
 test("2차원 배열을 1차원 배열로 만들기", () => {
-  expect(changeMatrix([[2], [2, 1], [1, 2, 3], [1, 2, 4, 3]])).toEqual([
+  expect(doubleArrToSingleArr([[2], [2, 1], [1, 2, 3], [1, 2, 4, 3]])).toEqual([
     2,
     2,
     1,
