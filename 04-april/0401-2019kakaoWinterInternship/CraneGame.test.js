@@ -1,8 +1,8 @@
 const solution = (board, moves) => {
   const pocket = [];
-  const field = updateBoard(...board);
+  board = updateBoard(board);
   return moves.reduce(
-    (_, move) => (_ += pluckDoll(field[move - 1], pocket)),
+    (_, move) => (_ += pluckDoll(board[move - 1], pocket)),
     0
   );
 };
@@ -18,9 +18,7 @@ const pluckDoll = (field, pocket) => {
 
 const top = stack => (stack.length ? stack[stack.length - 1] : undefined);
 
-const updateBoard = (arr, ...arrs) => {
-  return arr.map((val, i) => arrs.reduce((a, arr) => [...a, arr[i]], [val]));
-};
+const updateBoard = board => board.map((_, y) => board.map(row => row[y]));
 
 test("인형 뽑기 테스트", () => {
   expect(pluckDoll([4, 3], [4])).toBe(2);
@@ -52,13 +50,13 @@ test("solution", () => {
 
 test("col을 기준으로 값 바꾸기", () => {
   expect(
-    updateBoard(
+    updateBoard([
       [0, 0, 0, 0, 0],
       [0, 0, 1, 0, 3],
       [0, 2, 5, 0, 1],
       [4, 2, 4, 4, 2],
       [3, 5, 1, 3, 1]
-    )
+    ])
   ).toEqual([
     [0, 0, 0, 4, 3],
     [0, 0, 2, 2, 5],
