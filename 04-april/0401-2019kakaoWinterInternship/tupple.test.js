@@ -9,6 +9,8 @@ const getSets = s => {
     .sort((a, b) => a.length - b.length);
 };
 
+const changeMatrix = sets => sets.reduce((_, set) => _.concat(set), []);
+
 test("solution", () => {
   expect(solution("{{1,2,3},{2,1},{1,2,4,3},{2}}")).toEqual([2, 1, 3, 4]);
 });
@@ -27,5 +29,20 @@ test("집합 단위로 추출하기", () => {
     [2, 3],
     [4, 2, 3],
     [2, 3, 4, 1]
+  ]);
+});
+
+test("2차원 배열을 1차원 배열로 만들기", () => {
+  expect(changeMatrix([[2], [2, 1], [1, 2, 3], [1, 2, 4, 3]])).toEqual([
+    2,
+    2,
+    1,
+    1,
+    2,
+    3,
+    1,
+    2,
+    4,
+    3
   ]);
 });
