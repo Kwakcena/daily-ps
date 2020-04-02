@@ -1,6 +1,4 @@
-const solution = s => {
-  return [2, 1, 3, 4];
-};
+const solution = s => tupple(changeMatrix(getSets(s)));
 
 const getSets = s => {
   const sets = s.match(/{[\d,]+}/g);
@@ -10,6 +8,10 @@ const getSets = s => {
 };
 
 const changeMatrix = sets => sets.reduce((_, set) => _.concat(set), []);
+
+const tupple = arr => [
+  ...arr.reduce((set, value) => set.add(value), new Set())
+];
 
 test("solution", () => {
   expect(solution("{{1,2,3},{2,1},{1,2,4,3},{2}}")).toEqual([2, 1, 3, 4]);
@@ -45,4 +47,8 @@ test("2차원 배열을 1차원 배열로 만들기", () => {
     4,
     3
   ]);
+});
+
+test("tupple 만들기", () => {
+  expect(tupple([2, 2, 1, 1, 2, 3, 1, 2, 4, 3])).toEqual([2, 1, 3, 4]);
 });
