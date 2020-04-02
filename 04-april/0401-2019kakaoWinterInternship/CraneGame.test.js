@@ -2,7 +2,7 @@ const solution = (board, moves) => {
   const pocket = [];
   board = updateBoard(board);
   return moves.reduce(
-    (_, move) => (_ += pluckDoll(board[move - 1], pocket)),
+    (acc, move) => acc + pluckDoll(board[move - 1], pocket),
     0
   );
 };
