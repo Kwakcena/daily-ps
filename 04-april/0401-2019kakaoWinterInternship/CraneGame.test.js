@@ -16,7 +16,7 @@ const pluckDoll = (field, pocket) => {
   }
 };
 
-const top = stack => (stack.length ? stack[stack.length - 1] : undefined);
+const top = stack => stack[stack.length - 1];
 
 const updateBoard = board => board.map((_, y) => board.map(row => row[y]));
 
