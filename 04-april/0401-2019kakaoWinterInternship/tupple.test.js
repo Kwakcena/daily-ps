@@ -1,11 +1,10 @@
 const solution = s => tupple(doubleArrToSingleArr(getSets(s)));
 
-const getSets = s => {
-  const sets = s.match(/{[\d,]+}/g);
-  return sets
+const getSets = s =>
+  s
+    .match(/{[\d,]+}/g)
     .map(set => set.match(/[\d]+,?/g).map(v => parseInt(v)))
     .sort((a, b) => a.length - b.length);
-};
 
 const doubleArrToSingleArr = sets =>
   sets.reduce((arr, set) => arr.concat(set), []);
@@ -68,4 +67,17 @@ test("2차원 배열을 1차원 배열로 만들기", () => {
 
 test("tupple 만들기", () => {
   expect(tupple([2, 2, 1, 1, 2, 3, 1, 2, 4, 3])).toEqual([2, 1, 3, 4]);
+});
+
+const jsonParse = text => {};
+
+test("JSON.parse 테스트", () => {
+  expect(JSON.parse("[2, 3]")).toEqual([2, 3]);
+  expect(JSON.parse('{"2" : 3}')).toEqual({ "2": 3 });
+  expect(JSON.parse("[1,2,[3,4],5]")).toEqual([1, 2, [3, 4], 5]);
+  expect(JSON.parse("[[1,2],[3,4],[5,6]]")).toEqual([
+    [1, 2],
+    [3, 4],
+    [5, 6]
+  ]);
 });
