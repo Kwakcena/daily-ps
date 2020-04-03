@@ -15,11 +15,10 @@ const tupple = arr => [
 
 const solution2 = s =>
   JSON.parse(s.replace(/{/g, "[").replace(/}/g, "]"))
-    .sort((a, b) => a.length - b.length)
-    .reduce(
-      (arr, v, n) => (n ? arr.concat(v.filter(f => !arr.includes(f))) : v),
-      []
-    );
+    .sort(accendingByLength)
+    .reduce((acc, cur) => [...acc, ...cur.filter(it => !acc.includes(it))], []);
+
+const accendingByLength = (arr1, arr2) => arr1.length - arr2.length;
 
 test("solution2 다른 사람의 풀이", () => {
   expect(solution2("{{2},{2,1},{2,1,3},{2,1,3,4}}")).toEqual([2, 1, 3, 4]);
