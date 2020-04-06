@@ -15,6 +15,13 @@ const getRestrictId = (user_id, banned_id) => {
   );
 };
 
+const getUsedIdObject = (user_id) => {
+  return user_id.reduce((obj, id) => {
+    obj[id] = obj[id] || 1;
+    return obj;
+  }, {});
+};
+
 test("solution", () => {
   expect(
     solution(
@@ -37,5 +44,11 @@ test("바뀐 목록과 일치하는 응모자 아이디의 목록을 구한다."
       ["frodo", "fradi", "crodo", "abc123", "frodoc"],
       ["fr[a-z0-9]d[a-z0-9]$", "abc1[a-z0-9][a-z0-9]$"]
     )
-  ).toStrictEqual();
+  ).toStrictEqual([["frodo", "fradi"], ["abc123"]]);
+});
+
+test("사용 횟수 객체 구하기", () => {
+  expect(
+    getUsedIdObject(["frodo", "fradi", "crodo", "abc123", "frodoc"])
+  ).toStrictEqual({ abc123: 1, crodo: 1, fradi: 1, frodo: 1, frodoc: 1 });
 });
