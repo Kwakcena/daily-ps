@@ -1,5 +1,11 @@
 const solution = (user_id, banned_id) => {
-  return 2;
+  return numberOfCases(
+    getUsedIdObject(user_id),
+    new Set(),
+    0,
+    getRestrictId(user_id, getBannedReg(banned_id)),
+    []
+  );
 };
 
 const getBannedReg = (banned_id) => {
@@ -17,29 +23,29 @@ const getRestrictId = (user_id, banned_id) => {
 
 const getUsedIdObject = (user_id) => {
   return user_id.reduce((obj, id) => {
-    obj[id] = obj[id] || true;
+    obj[id] = obj[id] || false;
     return obj;
   }, {});
 };
 
-function numberOfCases(usedObj, answer, index, banneds, temp) {
-  if (temp.length == banneds.length) {
-    answer.add(temp.sort().join(" "));
+function numberOfCases(isUsed, banneds, index, banned_id, id) {
+  if (id.length == banned_id.length) {
+    banneds.add(id.sort().join(" "));
     return;
   }
-  for (let i = index; i < banneds.length; i++) {
-    for (let j = 0; j < banneds[i].length; j++) {
-      const banned = banneds[i][j];
-      if (!usedObj[banned]) continue;
-      temp.push(banned);
-      usedObj[banned] = false;
-      numberOfCases({ ...usedObj }, answer, i + 1, banneds, [...temp]);
-      usedObj[banned] = true;
-      temp.pop();
+  for (let i = index; i < banned_id.length; i++) {
+    for (let j = 0; j < banned_id[i].length; j++) {
+      const banned = banned_id[i][j];
+      if (isUsed[banned]) continue;
+      id.push(banned);
+      isUsed[banned] = true;
+      numberOfCases({ ...isUsed }, banneds, i + 1, banned_id, [...id]);
+      isUsed[banned] = false;
+      id.pop();
     }
   }
 
-  return [...answer];
+  return [...banneds].length;
 }
 
 test("solution", () => {
@@ -54,7 +60,7 @@ test("solution", () => {
       ["frodo", "fradi", "crodo", "abc123", "frodoc"],
       ["fr*d*", "*rodo", "******", "******"]
     )
-  ).toBe(2);
+  ).toBe(3);
 });
 
 test("baaned_id 목록의 * 을 정규식으로 바꾸기", () => {
@@ -99,11 +105,11 @@ test("사용 횟수 객체 구하기", () => {
   expect(
     getUsedIdObject(["frodo", "fradi", "crodo", "abc123", "frodoc"])
   ).toStrictEqual({
-    abc123: true,
-    crodo: true,
-    fradi: true,
-    frodo: true,
-    frodoc: true,
+    abc123: false,
+    crodo: false,
+    fradi: false,
+    frodo: false,
+    frodoc: false,
   });
 });
 
@@ -111,11 +117,11 @@ test("재귀를 이용해서 경우의 수를 구한다", () => {
   expect(
     numberOfCases(
       {
-        abc123: true,
-        crodo: true,
-        fradi: true,
-        frodo: true,
-        frodoc: true,
+        abc123: false,
+        crodo: false,
+        fradi: false,
+        frodo: false,
+        frodoc: false,
       },
       new Set(),
       0,
@@ -127,24 +133,20 @@ test("재귀를 이용해서 경우의 수를 구한다", () => {
       ],
       []
     )
-  ).toStrictEqual([
-    "abc123 crodo frodo frodoc",
-    "abc123 fradi frodo frodoc",
-    "abc123 crodo fradi frodoc",
-  ]);
+  ).toBe(3);
   expect(
     numberOfCases(
       {
-        abc123: true,
-        crodo: true,
-        fradi: true,
-        frodo: true,
-        frodoc: true,
+        abc123: false,
+        crodo: false,
+        fradi: false,
+        frodo: false,
+        frodoc: false,
       },
       new Set(),
       0,
       [["frodo", "fradi"], ["abc123"]],
       []
     )
-  ).toStrictEqual(["abc123 frodo", "abc123 fradi"]);
+  ).toBe(2);
 });
