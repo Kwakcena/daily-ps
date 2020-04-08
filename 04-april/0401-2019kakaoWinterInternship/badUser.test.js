@@ -1,23 +1,25 @@
 const solution = (user_id, banned_id) => {
   return numberOfCases(
     getUsedIdObject(user_id),
-    getBannedList(user_id, banned_id)
+    // getBannedList(user_id, banned_id)
+    getRestrictId(user_id, getBannedReg(banned_id))
   );
 };
 
-const isPossible = (user_id, banned_id) => {
-  if (user_id.length != banned_id.length) return false;
-  for (let i = 0; i < user_id.length; i++) {
-    if (banned_id[i] != "*" && user_id[i] != banned_id[i]) return false;
+const isMatch = (str, pattern) => {
+  if (str.length !== pattern.length) {
+    return false;
   }
-  return true;
+  return str
+    .split("")
+    .every((it, index) => pattern[index] === "*" || it === pattern[index]);
 };
 
 const getBannedList = (user_id, banned_id) => {
   return banned_id.reduce((bannnedList, banned) => {
     return bannnedList.concat([
       user_id.reduce((userList, user) => {
-        return isPossible(user, banned) ? [...userList, user] : userList;
+        return isMatch(user, banned) ? [...userList, user] : userList;
       }, []),
     ]);
   }, []);
@@ -179,9 +181,9 @@ test("재귀를 이용해서 경우의 수를 구한다", () => {
 });
 
 test("정규식 안쓰고 매칭 사용자 찾기", () => {
-  expect(isPossible("frodo", "fr*d*")).toBe(true);
-  expect(isPossible("frodo", "*****")).toBe(true);
-  expect(isPossible("fradi", "c****")).toBe(false);
+  expect(isMatch("frodo", "fr*d*")).toBe(true);
+  expect(isMatch("frodo", "*****")).toBe(true);
+  expect(isMatch("fradi", "c****")).toBe(false);
 });
 
 test("제재 아이디 구하기", () => {
