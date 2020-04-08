@@ -23,9 +23,9 @@ const getBannedList = (user_id, banned_id) => {
   }, []);
 };
 
-// const getBannedReg = (banned_id) => {
-//   return banned_id.map((id) => id.replace(/\*/g, "[a-z0-9]") + "$");
-// };
+const getBannedReg = (banned_id) => {
+  return banned_id.map((id) => `^${id.replace(/\*/g, "[a-z0-9]")}$`);
+};
 
 // const getRestrictId = (user_id, banned_id) => {
 //   return banned_id.map((id) =>
@@ -84,18 +84,18 @@ test("solution", () => {
   ).toBe(3);
 });
 
-// test("baaned_id 목록의 * 을 정규식으로 바꾸기", () => {
-//   expect(getBannedReg(["fr*d*", "abc1**"])).toStrictEqual([
-//     "fr[a-z0-9]d[a-z0-9]$",
-//     "abc1[a-z0-9][a-z0-9]$",
-//   ]);
-//   expect(getBannedReg(["fr*d*", "*rodo", "******", "******"])).toStrictEqual([
-//     "fr[a-z0-9]d[a-z0-9]$",
-//     "[a-z0-9]rodo$",
-//     "[a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9]$",
-//     "[a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9]$",
-//   ]);
-// });
+test("baaned_id 목록의 * 을 정규식으로 바꾸기", () => {
+  expect(getBannedReg(["fr*d*", "abc1**"])).toStrictEqual([
+    "^fr[a-z0-9]d[a-z0-9]$",
+    "^abc1[a-z0-9][a-z0-9]$",
+  ]);
+  expect(getBannedReg(["fr*d*", "*rodo", "******", "******"])).toStrictEqual([
+    "^fr[a-z0-9]d[a-z0-9]$",
+    "^[a-z0-9]rodo$",
+    "^[a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9]$",
+    "^[a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9][a-z0-9]$",
+  ]);
+});
 
 // test("바뀐 목록과 일치하는 응모자 아이디의 목록을 구한다.", () => {
 //   expect(
