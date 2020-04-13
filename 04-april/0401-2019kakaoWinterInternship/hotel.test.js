@@ -1,15 +1,15 @@
 const solution = (k, roomNumbers) => {
-  const used = {};
+  const used = new Map();
   return roomNumbers.map((number) => findRoom(number, used));
 };
 
 function findRoom(room, used) {
-  if (used[room] == undefined) {
-    used[room] = room + 1;
+  if (used.get(room) == undefined) {
+    used.set(room, room + 1);
     return room;
   }
-  let next = findRoom(used[room], used);
-  used[room] = next + 1;
+  let next = findRoom(used.get(room), used);
+  used.set(room, next + 1);
   return next;
 }
 
