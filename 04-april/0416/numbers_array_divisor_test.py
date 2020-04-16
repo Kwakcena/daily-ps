@@ -1,6 +1,6 @@
 def solution(arr, divisor):
-    arr = list(filter(lambda x: x % divisor == 0, sorted(arr)))
-    return arr if len(arr) else [-1]
+    return list(filter(lambda x: x % divisor == 0, sorted(arr))) or [-1]
+    # return arr if len(arr) else [-1]
 
 
 def test_solution():
