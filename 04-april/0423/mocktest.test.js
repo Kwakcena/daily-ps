@@ -1,5 +1,15 @@
 const solution = (answers) => {
-  return 1;
+  const numbers = [
+    getNumberOfAnswer(answers, [1, 2, 3, 4, 5]),
+    getNumberOfAnswer(answers, [2, 1, 2, 3, 2, 4, 2, 5]),
+    getNumberOfAnswer(answers, [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]),
+  ];
+
+  const max = Math.max(...numbers);
+  return numbers.reduce(
+    (acc, number, i) => (number >= max ? [...acc, i + 1] : acc),
+    []
+  );
 };
 
 const getNumberOfAnswer = (answers, submit) => {
@@ -8,7 +18,8 @@ const getNumberOfAnswer = (answers, submit) => {
 };
 
 test("solution", () => {
-  expect(solution([1, 2, 3, 4, 5])).toBe(1);
+  expect(solution([1, 3, 2, 4, 2])).toStrictEqual([1, 2, 3]);
+  expect(solution([1, 2, 3, 4, 5])).toStrictEqual([1]);
 });
 
 test("1번 수포자의 정답 개수 얻기", () => {
