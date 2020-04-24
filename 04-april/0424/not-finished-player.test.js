@@ -1,9 +1,7 @@
 const solution = (participants, completions) => {
   participants = participants.sort();
   completions = completions.sort();
-  return participants.filter(
-    (participant, index) => completions[index] !== participant
-  )[0];
+  return participants.find((it, index) => it !== completions[index]);
 };
 
 test("solution", () => {
