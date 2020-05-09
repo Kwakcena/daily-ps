@@ -1,11 +1,6 @@
-const solution = (clothes) => {
-  const kinds = getNumberOfKinds(clothes);
-  return kinds
-    .map((_, index) => combination(kinds, kinds.length, index + 1))
-    .reduce((acc, x) => acc + x);
-};
+const solution = (clothes) => combination(numberOfKinds(clothes));
 
-const getNumberOfKinds = (clothes) =>
+const numberOfKinds = (clothes) =>
   Object.values(
     clothes.reduce(
       (acc, clothe) => ((acc[clothe[1]] = (acc[clothe[1]] || 0) + 1), acc),
@@ -48,7 +43,7 @@ test("solution", () => {
 
 test("clothes를 객체로 바꾸기", () => {
   expect(
-    getNumberOfKinds([
+    numberOfKinds([
       ["yellow_hat", "headgear"],
       ["blue_sunglasses", "eyewear"],
       ["green_turban", "headgear"],
