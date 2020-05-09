@@ -1,5 +1,5 @@
 const solution = (clothes) => {
-  clothes = arrayToObject(clothes);
+  clothes = getNumberOfKinds(clothes);
   const keys = Object.keys(clothes);
   const values = Object.values(clothes);
 
@@ -10,13 +10,13 @@ const solution = (clothes) => {
     .reduce((acc, x) => acc + x);
 };
 
-const arrayToObject = (clothes) => {
-  return clothes.reduce((object, clothe) => {
-    const [_, kind] = clothe;
-    object[kind] = (object[kind] || 0) + 1;
-    return object;
-  }, {});
-};
+const getNumberOfKinds = (clothes) =>
+  Object.values(
+    clothes.reduce(
+      (acc, clothe) => ((acc[clothe[1]] = (acc[clothe[1]] || 0) + 1), acc),
+      {}
+    )
+  );
 
 function combination(source, n, r, final = [], value = 1, index = 0) {
   if (r == 0) {
@@ -67,13 +67,10 @@ test("solution", () => {
 
 test("clothes를 객체로 바꾸기", () => {
   expect(
-    arrayToObject([
+    getNumberOfKinds([
       ["yellow_hat", "headgear"],
       ["blue_sunglasses", "eyewear"],
       ["green_turban", "headgear"],
     ])
-  ).toStrictEqual({
-    headgear: 2,
-    eyewear: 1,
-  });
+  ).toStrictEqual([2, 1]);
 });
