@@ -13,24 +13,10 @@ const getNumberOfKinds = (clothes) =>
     )
   );
 
-function combination(source, n, r, final = [], value = 1, index = 0) {
-  if (r == 0) {
-    final.push(value);
-  } else if (n == 0 || n < r) {
-    return;
-  } else {
-    value *= source[index];
-    combination(source, n - 1, r - 1, final, value, index + 1);
-    value /= source[index];
-    combination(source, n - 1, r, final, value, index + 1);
-  }
-  return final.reduce((acc, x) => acc + x);
-}
+const combination = (kinds) => kinds.reduce((acc, it) => acc * (it + 1), 1) - 1;
 
 test("combination", () => {
-  expect(combination([1, 3, 2], 3, 1)).toBe(6); //[1, 3, 2]
-  expect(combination([1, 3, 2], 3, 2)).toBe(11); //[3, 2, 6]
-  expect(combination([1, 3, 2], 3, 3)).toBe(6); //[6]
+  expect(combination([3, 2, 1])).toBe(23);
 });
 
 test("solution", () => {
