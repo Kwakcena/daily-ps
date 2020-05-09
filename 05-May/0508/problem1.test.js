@@ -8,10 +8,10 @@ const solution = (land) => {
 };
 
 const solution2 = (lands) => {
-  const answer = lands.reduce((arr, land) => {
+  const answer = lands.reduce((arr, row) => {
     return [
       ...arr,
-      ...land.map(
+      ...row.map(
         (score, i) =>
           (score += Math.max(...arr.slice(-4).filter((_, j) => i !== j)))
       ),
