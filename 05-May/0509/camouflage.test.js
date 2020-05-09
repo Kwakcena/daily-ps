@@ -1,12 +1,7 @@
 const solution = (clothes) => {
-  clothes = getNumberOfKinds(clothes);
-  const keys = Object.keys(clothes);
-  const values = Object.values(clothes);
-
-  return keys
-    .map((_, index) => {
-      return combination(values, keys.length, index + 1);
-    })
+  const kinds = getNumberOfKinds(clothes);
+  return kinds
+    .map((_, index) => combination(kinds, kinds.length, index + 1))
     .reduce((acc, x) => acc + x);
 };
 
