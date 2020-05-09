@@ -4,8 +4,8 @@ const solution = (clothes) => {
 
 const arrayToObject = (clothes) => {
   return clothes.reduce((object, clothe) => {
-    const [name, kind] = clothe;
-    object[kind] = [...(object[kind] || []), name];
+    const [_, kind] = clothe;
+    object[kind] = (object[kind] || 0) + 1;
     return object;
   }, {});
 };
@@ -28,7 +28,7 @@ test("clothes를 객체로 바꾸기", () => {
       ["green_turban", "headgear"],
     ])
   ).toStrictEqual({
-    headgear: ["yellow_hat", "green_turban"],
-    eyewear: ["blue_sunglasses"],
+    headgear: 2,
+    eyewear: 1,
   });
 });
