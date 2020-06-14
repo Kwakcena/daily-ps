@@ -1,8 +1,7 @@
 const solution = (heights) => {
-  const answer = heights.map((height, index) => {
-
+  return heights.map((height, index) => {
+    return getIndex(heights.slice(0, index + 1), height);
   })
-  return [0,0,2,2,4];
 }
 
 const getIndex = (array, number) => {
@@ -12,6 +11,8 @@ const getIndex = (array, number) => {
 
 test("solution", () => {
   expect(solution([6,9,5,7,4])).toStrictEqual([0,0,2,2,4]);
+  expect(solution([3,9,9,3,5,7,2])).toStrictEqual([0,0,0,3,3,3,6]);
+  expect(solution([1,5,3,6,7,6,5])).toStrictEqual([0,0,2,0,0,5,6]);
 })
 
 test("자신보다 큰 수를 처음으로 만나는 지점의 index를 구한다.", () => {
