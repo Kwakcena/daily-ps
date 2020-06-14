@@ -1,8 +1,6 @@
-const solution = (heights) => {
-  return heights.map((height, index) => {
-    return getIndex(heights.slice(0, index + 1), height);
-  })
-}
+const solution = (heights) => 
+  heights.map((height, index) => getIndex(heights.slice(0, index + 1), height))
+
 
 const getIndex = (array, number) => {
   const index = array.reverse().findIndex((x) => x > number);
