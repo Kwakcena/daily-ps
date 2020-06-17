@@ -2,7 +2,6 @@ const solution = (bridgeLength, weight, truckWeights) => {
   const bridge = Array(bridgeLength).fill(0);
   let time = 0;
   let total = 0;
-  let end = 0;
 
   for(let i = 0; total || truckWeights.length; i++) {
     let goHomeTruck = bridge.shift();
@@ -10,7 +9,7 @@ const solution = (bridgeLength, weight, truckWeights) => {
       total -= goHomeTruck;
     }
 
-    if(i === 0 || total + truckWeights[0] <= weight) {
+    if(total + truckWeights[0] <= weight) {
       total += truckWeights[0];
       bridge.push(truckWeights.shift());
     }
@@ -19,7 +18,7 @@ const solution = (bridgeLength, weight, truckWeights) => {
       i--;
     }
     time++;
-  }
+  }  
   return time;
 }
 
