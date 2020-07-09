@@ -1,0 +1,17 @@
+{
+  "name": "programmers-H-index",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^26.0.4",
+    "jest": "^26.1.0",
+    "jest-plugin-context": "^2.9.0"
+  },
+  "description": ""
+}
