@@ -1,24 +1,28 @@
-let answer = 0;
+const bfs = (numbers, target) => {
+  const queue = [], answer = [];
+  
+  let len = numbers.length - 1;
+  let front = 0, index = 1, current = numbers[0];
 
-function dfs(numbers, target, count = 0, number = 0, index = 0) {
-  if (count === numbers.length) {
-    if (number === target) {
-      answer += 1;
+  while (len--) {
+    let repeat = Math.pow(2, index) / 2;
+    while (repeat--) {
+      queue.push(...[current + numbers[index], current - numbers[index]]);
+      if (!len) {
+        answer.push(...[current + numbers[index], current - numbers[index]]);
+      }
+      current = queue[front++];
     }
-    return;
+    index += 1;
   }
 
-  for (let i = index; i < numbers.length; i += 1) {
-    dfs(numbers, target, count + 1, number + numbers[i], i + 1);
-    dfs(numbers, target, count + 1, number - numbers[i], i + 1);
-  }
+  return answer.reduce((acc, value) => 
+    Math.abs(value) === target ? acc + 1 : acc, 0
+  );
 }
 
-const solution = (numbers, target) => {
-  dfs(numbers, target);
-  return answer;
-};
+const solution = (numbers, target) => bfs(numbers, target);
 
-test('solution', () => {
-  expect(solution([1, 1, 1, 1, 1], 3)).toBe(5);
-});
+test("solution", () => {
+  expect(solution([1,1,1,1,1], 3)).toBe(5);
+})

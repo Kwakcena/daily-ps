@@ -19,5 +19,10 @@ module.exports = {
     'react',
   ],
   rules: {
+    'no-restricted-properties': [2, {
+      object: 'disallowedObjectName',
+      property: 'disallowedPropertyName',
+    }],
+    allowForLoopAfterthoughts: true,
   },
 };
